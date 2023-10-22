@@ -12,22 +12,23 @@ Adventure.delete_all
 User.delete_all
 
 total_users = 2000
-
-puts "Creating #{total_users} users..."
 i = 0
+puts "Creating #{total_users} users..."
 user_data = []
+index = 0
 2000.times do
     name = Faker::Name.name
-    email = Faker::Internet.email
-    password = Faker::Lorem.word
+    email = "me+#{index}@gmail.com"
+    password = "password+#{index}"
 
     puts "Name: #{name}, Email: #{email}, Password: #{password}"
-
+    
     user_data.push({
         name: name,
         email: email,
-        password_digest: password
+        password: password
     })
+    index += 1
     puts "User #{i += 1}/#{total_users} created"
 end
 User.insert_all(user_data)

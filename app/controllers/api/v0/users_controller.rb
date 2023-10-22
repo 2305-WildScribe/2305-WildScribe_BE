@@ -11,8 +11,9 @@ class Api::V0::UsersController < ApplicationController
 
     def login
         user = User.find_by!(email: user_params[:attributes][:email])
-        if user.authenticate(user_params[:attributes][:password])
-            render json: {data: { type: "user", attributes: {user_id: user.id }}}
+        BCrypt::Password.create(user.password)
+        if user.password == user_params[:attributes][:password]
+            render json: {data: { type: "user", attributes: {name: user.name, user_id: user.id }}}
         end 
     rescue ActiveRecord::RecordNotFound
         render json: {message: "User not found"}, status: 404

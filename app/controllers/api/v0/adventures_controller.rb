@@ -25,7 +25,7 @@ class Api::V0::AdventuresController < ApplicationController
   end
 
   def index
-    user = User.find_by!(adventure_params[:attributes][:user_id])
+    user = User.find(adventure_params[:attributes][:user_id])
     render json: {data: { type: "adventures", attributes:{adventures: user.adventures }}}
   rescue ActiveRecord::RecordNotFound
     render json: {message: "Adventure not found"}, status: 404
